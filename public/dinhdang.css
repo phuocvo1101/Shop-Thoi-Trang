@@ -1,0 +1,378 @@
+
+.bg-body{
+    background-image: url("image/hinhnen.png");
+
+
+}
+.container.group{
+    background-color: white;
+    width: 1200px;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+}
+.container{
+    background-color: white;
+    width: 1170px;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.container ul li{
+    float:left;
+    list-style:none;
+    padding-right:15px;
+    padding-left:15px;
+    color:#FFFFFF;
+}
+.container > ul  > li > ul{
+    position: absolute;
+    display:none;
+    clear:both;
+    margin-left:-20px;
+    background-color:aliceblue;
+    padding-top: 10px;
+    padding-left: 20px;
+
+}
+
+.container > ul  > li > ul > li{
+
+    clear:both;
+
+}
+
+
+.container > ul  > li > ul > li > ul{
+
+    position: absolute;
+    display:none;
+    clear:both;
+    margin-left: 100px;
+    margin-top: -30px;
+    background-color:aliceblue;
+    padding-top: 10px;
+    padding-left: 20px;
+
+}
+.container > ul  > li > ul > li > ul > li{
+
+    width: 80px;
+
+}
+.container > ul  > li > ul > li > ul > li{
+
+    clear:both;
+
+}
+.container > ul > li:hover > ul{
+
+display:block;
+
+}
+.container > ul > li > ul > li:hover > ul{
+
+    display:block;
+
+}
+a{
+    text-decoration: none;
+}
+a:hover{
+    color: red;
+}
+
+
+
+.container ul{
+    float: left;
+}
+#nav{
+    margin-top: -15px;
+}
+#topbar{
+   padding: 10px 0 0;
+    text-transform: uppercase;
+}
+
+#topbar{
+    color: #c5c3c3;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+}
+.container{
+    clear: both;
+}
+.row{
+    float: right;
+}
+
+
+.row::before,
+.row::after{
+    content: '';
+    display: table;
+    line-height: 0;
+}
+.row::after{
+    clear: both;
+}
+.row div{
+    float: left;
+    margin-left: 5px;
+}
+.border::after, .border::before{
+    clear: both;
+}
+.border{
+    border-width: 0 0 1px;
+    border-style: solid;
+    height: 1px;
+    padding-bottom: 2px;
+}
+.borderstrong{
+    border-width: 0 0 4px;
+    border-style: solid;
+    height: 1px;
+    margin-top: 4px;
+}
+#header #logo{
+    margin-left: 10px;
+    margin-top: 10px;
+    width: auto;
+}
+#logo{
+    float: left;
+    padding: 10px 0 5px;
+    text-transform: uppercase;
+}
+#logo-container{
+    min-height: 125px;
+    position: relative;
+    border-bottom: 1px solid gray;
+}
+.group::after{
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+}
+#header-cart-search{
+    max-width: 380px;
+    float: right;
+    padding: 10px 0 10px 0;
+}
+
+#header-cart-search .cart-item-icon{
+    background-image: url("image/header-cart.png");
+    padding-left: 45px;
+    background-repeat: no-repeat;
+}
+
+#header-cart-search .cart-item,
+#header-cart-search .cart-subtotal{
+    color: black;
+    float: left;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+#header-cart-search .cart-item{
+    border-color: #e0dfdf;
+    border: 1px #e0dfdf solid ;
+    padding-bottom: 2px;
+    margin-left: -1px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+#header-cart-search .cart-subtotal{
+    border-color: #e0dfdf;
+    border: 1px #e0dfdf solid ;
+    padding-bottom: 12px;
+    padding-top: 10px;
+    margin-left: -1px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+#header-cart-search .widget{
+    border-color: #e0dfdf;
+
+    padding-bottom: 14px;
+    padding-top: 10px;
+    margin-left: -1px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#header-cart-search .cart-subtotal .cart-subtotal-decimal{
+    font-size: 10px;
+    margin-top: -8px;
+    padding-left: 1px;
+}
+#header-cart-search
+#widget_search_mini{
+    margin-top: 10px;
+    position: relative;
+}
+#header-cart-search
+#search_mini{
+    background-image: url("image/header-search-mini.png") ;
+    background-repeat: no-repeat;
+    box-sizing: border-box;
+    height: 50px;
+    line-height: 50px;
+    padding: 12px 45px 11px 13px;
+    text-transform: uppercase;
+    color: #747373;
+    font-size: 18px;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+.search_mini #mini-search-submit{
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    height: 50px;
+    right: 0;
+    left: 0;
+    width: 50px;
+}
+#header-cart-search #form,
+#header-cart-search #search_mini{
+    left: 0;
+    right: 0;
+    margin: 0;
+    position: absolute;
+    width: 300px;
+}
+#header-cart-search #search_mini input{
+   float: left;
+}
+#header-cart-search
+.widget_shopping_cart{
+    float: left;
+    margin-left: -1px;
+    position: relative;
+    background-color: darkgray;
+    padding-top: 12px;
+}
+
+#header-cart-search
+.cart-row{
+    margin-top: 10px;
+}
+#header-sidebar{
+    max-width: 380px;
+    float: right;
+}
+#header-cart-search .cart-item span{
+    display: block;
+    float: left;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-left: 25px;
+}
+#header-cart-search .cart-item .cart-items-label{
+    font-size: 14px;
+    font-weight: normal;
+    padding-left: 10px;
+}
+#header-cart-search .widget_search_mini{
+    margin-top: 10px;
+    position: relative;
+}
+#header-sidebar .widget.text-image{
+    margin-top: 0px;
+    margin-right: -5px ;
+    padding-top: 16px;
+
+}
+#header-sidebar .widget.text-image.widget-first{
+   margin-bottom: -5px;
+
+}
+#header-sidebar  .widget_text.widget {
+
+    width: 362px;
+    height: 56px;
+    text-align: center;
+    padding-top: 25px;
+}
+
+#header-sidebar .widget{
+    border: 1px solid black;
+    width: 180px;
+    height:70px ;
+}
+#logo-container{
+    border-bottom: 1px solid black;
+}
+
+#primary{
+    margin-top: 25px;
+    clear: both;
+}
+
+.content-right{
+    width: 870px;
+
+    min-height: 400px;
+}
+.content-left{
+    width: 270px;
+
+    min-height: 400px;
+}
+.content-left > div > ul > li{
+    clear: both;
+}
+
+.danhmuc{
+    padding-left: 3px;
+
+}
+.danhmuc > ul{
+    margin-left: -50px;
+
+
+}
+.product > li{
+    border: 1px solid gray;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+.footer{
+    clear: both;
+    padding-left: 15px;
+
+}
+.footer > div > ul{
+    clear: both;
+    padding-left: 5px;
+    margin-top: 0px;
+}
+.footer > div > ul > li{
+    clear: both;
+    list-style: none;
+    color: black;
+}
+.gioithieu{
+    clear: both;
+}
+.gioithieu{   
+    padding-left: 15px;
+    padding-right: 10px;
+    font-size: 14px;
+    width: 1170px;
+}
+.diachi{
+    padding-left: 20px;
+}
