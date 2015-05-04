@@ -9,7 +9,9 @@
                      <li><img src="<?php echo base_url() ?>public/image/<?php echo $sp['hinh1'] ?>" width="300px" height="449px"/></li>
                      <?php }?>
                     </ul>
-
+                    
+                  
                 </div>
+                <p align="center"><?php echo $links; ?></p>
 
  </div>

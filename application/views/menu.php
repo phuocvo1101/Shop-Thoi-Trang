@@ -89,27 +89,7 @@
                             <?php $this->load->view('menu_top') ?>
                         </li>
 
-                        <li>
-                            <a href="#">
-                               Cuộc thi CS-MODEL »
-                            </a>
-                            <ul>
-                                <li>
-                                    <a href="#">Thể lệ cuộc thi CS-MODEL</a>
-                                </li>
-                                <li>
-                                    <a href="#">Qui định cuộc thi CS-MODEL</a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        ĐĂNG KÝ DỰ THI CS-MODEL
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">Hình ảnh cuộc thi</a>
-                                </li>
-                            </ul>
-                        </li>
+                        
                         <li>
                             <a href="<?php echo base_url()?>DiaChiShop">ĐỊA CHỈ SHOP</a>
                         </li>
@@ -119,22 +99,19 @@
                                 <span> »</span>
                             </a>
                             <ul>
-                                <li>
-                                    <a href="#">Câu hỏi thường gặp</a>
-                                </li>
-                                <li>
-                                    <a href="#">Hướng dẫn đặt hàng</a>
-                                </li>
-                                <li>
-                                    <a href="#">Hướng dẫn lấy sỉ quần áo Cát Sa</a>
-                                </li>
-                                <li>
-                                    <a href="#">Tài khoản ngân hàng</a>
-                                </li>
+                            <?php
+                            foreach($thongtin as $tt){
+                            ?>
+                               <li>
+                                    <a href="<?php echo base_url() ?>thongtincanbiet/<?php echo $tt['id'] ?>"><?php echo $tt['ten'] ?></a>
+                                </li> 
+                            <?php
+                            }
+                            ?>
                             </ul>
                         </li>
                         <li>
-                            <a href="#">KHUYẾN MÃI</a>
+                            <a href="<?php echo base_url() ?>khuyenmai">KHUYẾN MÃI</a>
                         </li>
                     </ul>
                 </div>

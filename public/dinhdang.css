@@ -108,6 +108,7 @@ a:hover{
 }
 .row{
     float: right;
+    width: 1150px;
 }
 
 
@@ -122,7 +123,7 @@ a:hover{
 }
 .row div{
     float: left;
-    margin-left: 5px;
+    margin-left: 15px;
 }
 .border::after, .border::before{
     clear: both;
@@ -375,4 +376,12 @@ a:hover{
 }
 .diachi{
     padding-left: 20px;
+}
+.cauhoi > div{
+    clear: both;
+}
+.gioithieu .cauhoi > a:hover > div{
+    display: block;
+}
+.khuyenmai > tr > td{
 }

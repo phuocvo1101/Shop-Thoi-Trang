@@ -50,7 +50,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['loaisanpham'] = 'loaisanpham';
+$route['loaisanpham/sanpham/(:any)'] = 'loaisanpham/sanpham';
 $route['loai-san-pham/(:num)'] = 'loaisanpham';
+$route['thongtincanbiet/(:num)'] = 'thongtincanbiet';
 $route['loai-san-pham/ao-so-mi'] = 'loaisanpham/aosomi';
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
