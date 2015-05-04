@@ -12,11 +12,13 @@ class Welcome extends MY_Controller {
     public function index()
     {
         $spmoi= $this->msp->sp_moi();
+        $dssplimit=$this->msp->dssplimit();
         if(!$spmoi){
             redirect('Welcome');
         }
+        //echo '<prev>'.print_r($dssplimit,true).'</prev>';die();
         $this->data['spmoi']=$spmoi;
-        
+        $this->data['dssplimit']=$dssplimit;
         $this->data['path']=array('Viewloaisanpham/danhmucsanpham','welcome_message');
         $this->load->view('layout',$this->data);
     }

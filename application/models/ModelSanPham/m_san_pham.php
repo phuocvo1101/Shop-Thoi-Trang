@@ -1,6 +1,10 @@
 <?php
 class M_san_pham extends CI_Model
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
     public function dssp()
     {
         $query=$this->db->get('sanpham');
@@ -8,6 +12,17 @@ class M_san_pham extends CI_Model
             return $query->result_array();
         }
         return false;
+    }
+    public function dssplimit()
+    {
+        $this->db->select('*')->from('sanpham')->join('hinhanh','hinhanh.idhinhanh=sanpham.idhinhanh')
+        ->order_by('idsanpham','desc')->limit(5);
+        $query=$this->db->get();
+        if($query->num_rows()==0){
+            return false;
+        }
+        return $query->result_array();
+        
     }
     public function sp_phantrang($limit,$start)
     {
@@ -20,16 +35,24 @@ class M_san_pham extends CI_Model
     }
     public function sp_id($id)
     {
-        //$this->db->where(array('idloaisanpham'=>$id));
-       // $this->db->select('*');
-       // $this->db->from('sanpham');
-        //$this->db->join('hinhanh','hinhanh.idhinhanh=sanpham.idhinhanh');
-        $this->db->select('*')->from('sanpham')->join('hinhanh','hinhanh.idhinhanh=sanpham.idhinhanh')->where(array('idloaisanpham'=>$id));
+        $this->db->select('*')->from('sanpham')->join('hinhanh','hinhanh.idhinhanh=sanpham.idhinhanh')
+        ->where(array('idloaisanpham'=>$id));
         $query=$this->db->get();
         if($query->num_rows()>0){
             return $query->result_array();
         }
         return false;
+    }
+    public function sp_id_phantrang($id,$limit,$start)
+    {
+        $this->db->select('*')->from('sanpham')->join('hinhanh','hinhanh.idhinhanh=sanpham.idhinhanh')
+        ->where(array('idloaisanpham'=>$id))->limit($limit,$start);
+        $query=$this->db->get();
+        if($query->num_rows()==0){
+             return false;            
+        }
+        return $query->result_array();
+       
     }
      public function lsp_id($id)
     {
@@ -42,11 +65,7 @@ class M_san_pham extends CI_Model
     }
     public function sp_moi()
     {
-         //$this->db->where(array('sanphammoi'=>'1'));
-        // $this->db->select('*');
-        //$this->db->from('sanpham');
-        //$this->db->join('hinhanh','hinhanh.idhinhanh=sanpham.idhinhanh');
-        $this->db->select('*')->from('sanpham')->join('hinhanh','hinhanh.idhinhanh=sanpham.idhinhanh')->where(array('sanphammoi'=>'1'));
+        $this->db->select('*')->from('sanpham')->join('hinhanh','hinhanh.idhinhanh=sanpham.idhinhanh')->where(array('sanphammoi'=>'1'))->order_by('rand()')->limit(4);
         $query=$this->db->get();
         if($query->num_rows()>0){
             return $query->result_array();

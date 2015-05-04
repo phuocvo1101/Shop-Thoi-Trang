@@ -6,7 +6,12 @@ class MY_Controller extends CI_Controller
     {
         parent::__construct();
         $this->load->model('ModelLoaiSanPham/m_loai_sp','mlsp');
+         $this->load->model('ModelThongTinCanBiet/m_thong_tin_can_biet','mtt');
         
+         $thongtin= $this->mtt->ds_loai_cha();
+        // echo '<pre>'.print_r($thongtin).'</prev>';die();
+         $this->data['thongtin']=$thongtin;
+            
         $kq=$this->mlsp->ds_loai_cha();
         $this->data['kq'] = $kq;
         
