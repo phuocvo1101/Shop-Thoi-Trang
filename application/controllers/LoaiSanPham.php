@@ -39,6 +39,22 @@ class loaisanpham extends MY_Controller
         $this->data['path']=array('Viewloaisanpham/contentsanpham') ;
         $this->load->view('layout',$this->data);
     }
+    public function chitietsanpham()
+    {
+        $id= $this->uri->segment(3);
+        $idloaisanpham= $this->uri->segment(4);
+        $chitietsp= $this->msp->chi_tiet_sp_id($id);
+        if(!$chitietsp){
+            redirect('Welcome');
+        }
+      
+        $sanphamcungloai= $this->msp->sp_cung_loai($id,$idloaisanpham); 
+        $this->data['spcungloai']=$sanphamcungloai;
+        $this->data['chitietsp']=$chitietsp;
+        $this->data['path']=array('ViewShop/index');
+        $this->load->view('layout',$this->data);
+    }
+   
     public function sanphammoi()
     {
         $spmoi= $this->msp->sp_moi();

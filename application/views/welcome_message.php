@@ -7,7 +7,7 @@
                          <?php
                         foreach($spmoi as $sp){
                          ?>
-                         <li><img src="<?php echo base_url() ?>public/image/<?php echo $sp['hinh1'] ?>" width="300px" height="449px"/></li>
+                         <li><a href="<?php echo base_url() ?>loaisanpham/chitietsanpham/<?php echo $sp['idsanpham'].'/'.$sp['idloaisanpham'] ?>"><img src="<?php echo base_url(). $sp['hinh1'] ?>" width="300px" height="449px"/></a></li>
                          <?php }?>
                     </ul>
 
@@ -20,7 +20,7 @@
                          <?php
                             foreach($dssplimit as $sp){
                          ?>
-                         <li><img src="<?php echo base_url() ?>public/image/<?php echo $sp['hinh1'] ?>" width="300px" height="449px"/></li>
+                         <li><a href="<?php echo base_url() ?>loaisanpham/chitietsanpham/<?php echo $sp['idsanpham'].'/'.$sp['idloaisanpham'] ?>"><img src="<?php echo base_url(). $sp['hinh1'] ?>" width="300px" height="449px"/></a></li>
                          <?php }?>
                         
                     </ul>

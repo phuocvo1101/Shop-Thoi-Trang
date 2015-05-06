@@ -1,63 +1,71 @@
- <div id="primary">
-            <div class="container group">
-                <div class="row">
-
-                    <div class="content-left group">
-                        <div>
-                            <h3>DANH MỤC SẢN PHẨM</h3>
-                        </div>
-                        <div class="danhmuc">
-                            <ul>
-                                <li><a href="<?php echo base_url()?>LoaiSanPham/aosomi">Áo sơ mi</a> </li>
-                                <li><a href="<?php echo base_url()?>LoaiSanPham/aothun">Áo thun nam</a></li>
-                                <li><a href="<?php echo base_url()?>LoaiSanPham/quanjeannam">Quần Jean Nam</a></li>
-                                <li><a href="<?php echo base_url()?>LoaiSanPham/quankakinam">Quần Kaki Nam</a> </li>
-                                <li><a href="<?php echo base_url()?>LoaiSanPham/aovest">Áo vest nam</a></li>
-                                <li><a href="<?php echo base_url()?>LoaiSanPham/quanlungnam">Quần lửng nam</a></li>
-                                <li><a href="<?php echo base_url()?>LoaiSanPham/aokhoacnam">Áo khoác nam</a></li>
-                                <li><a href="<?php echo base_url()?>LoaiSanPham/aosomi">Túi xách nam</a> </li>
-                                <li><a href="<?php echo base_url()?>LoaiSanPham/giaydepnam">Giày dép nam</a></li>
-                                <li><a href="<?php echo base_url()?>LoaiSanPham/aosomi">Phụ kiện thời trang nam</a></li>
-
-                            </ul>
-                        </div>
-                        <div><h3>HỖ TRỢ TRỰC TUYẾN</h3></div>
-
-                    </div>
-
+ 
                     <div class="content-right group">
                         <div style="width: 870px;">
-                            <h3>SẢN PHẨM MỚI</h3>
+                            <h3>CHI TIẾT SẢN PHẨM</h3>
+                            <div>
+                                <img src="<?php echo base_url().$chitietsp['hinh1'] ?>" width="300px" height="449px"/>
+                            </div>
+                            <div style="width: 500px; padding-left: 30px;" > 
+                              <p>Mã Sản Phẩm:<?php echo $chitietsp['idsanpham'] ?></p>
+                              <hr /> <hr /> <hr />
+                              <p>Price:<?php echo number_format($chitietsp['dongia']).' VND';  ?> </p>  
+                              <p>Mô Tả: <?php echo $chitietsp['chitietsp'] ?></p>
+                                                          
+                            </div>
 
-                            <ul class="product">
-                                <li><img src="<?php echo base_url() ?>public/image/quạnean.jpg" width="300px" height="449px"/></li>
-                                <li><img src="<?php echo base_url() ?>public/image/aosomi.jpg" width="300px" height="449px"/></li>
-                                <li><img src="<?php echo base_url() ?>public/image/ao-so-mi-trang.jpg" width="300px" height="449px"/></li>
-                                <li><img src="<?php echo base_url() ?>public/image/ao-so-mi-trang.jpg" width="300px" height="449px"/></li>
-                            </ul>
 
                         </div>
 
                         <div style="width: 870px;">
-                            <h3>DANH MỤC SẢN PHẨM</h3>
-
+                            <h3>SẢN PHẨM CÙNG LOẠI</h3>
+                           
                             <ul class="product">
-                                <li><img src="<?php echo base_url() ?>public/image/quạnean.jpg" width="300px" height="449px"/></li>
-                                <li><img src="<?php echo base_url() ?>public/image/aosomi.jpg" width="300px" height="449px"/></li>
-                                <li><img src="<?php echo base_url() ?>public/image/ao-so-mi-trang.jpg" width="300px" height="449px"/></li>
-                                <li><img src="<?php echo base_url() ?>public/image/ao-so-mi-trang.jpg" width="300px" height="449px"/></li>
+                             <?php foreach($spcungloai as $spcl){
+                                ?>
+                                 <li><img src="<?php echo base_url().$spcl['hinh1'] ?>" width="300px" height="449px"/></li>
+                                <?php
+                            } ?>
+                               
+                                
                             </ul>
 
                         </div>
 
                     </div>
+                    
+                    <div class="content-left group" style="padding-top: 80px; padding-right: 20px;">
+                      <div style="background-color:ghostwhite;">
+                              <form>
+                                <table style="border: 1px solid black;width: 250px;height: 300px;">
+                                    <tr>
+                                    <td colspan="2"> ĐĂT HÀNG</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Giá:</td>
+                                        <td><?php echo number_format($chitietsp['dongia']).' VND';  ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Số Lượng:</td>
+                                        <td><input type="text" name="soluong" id="soluong" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Chọn Size:</td>
+                                        <td>
+                                            <select>
+                                                <option>m</option>
+                                                <option>l</option>
+                                                <option>xl</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr><td colspan="2" align="center"><input type="submit" value="MUA" name="submitmua" /></td></tr>
+                                </table>
+                            </form>
+                    
+                    </div>
+                  
+                      
 
-                </div>
-                <div class="border borderstrong borderpadding container"></div>
-                <div class="border container"></div>
-                <div class="border container"></div>
-                <div class="border container"></div>
+                    </div>
 
-            </div>
-
-        </div>
+   

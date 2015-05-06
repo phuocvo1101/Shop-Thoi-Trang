@@ -43,6 +43,16 @@ class M_san_pham extends CI_Model
         }
         return false;
     }
+    public function chi_tiet_sp_id($id)
+    {      
+        $this->db->select('*')->from('sanpham')->join('hinhanh','hinhanh.idhinhanh=sanpham.idhinhanh')
+        ->where(array('idsanpham'=>$id));
+        $query= $this->db->get();
+         if($query->num_rows()==0){
+             return false;            
+        }
+        return $query->row_array();
+    }
     public function sp_id_phantrang($id,$limit,$start)
     {
         $this->db->select('*')->from('sanpham')->join('hinhanh','hinhanh.idhinhanh=sanpham.idhinhanh')
@@ -74,8 +84,10 @@ class M_san_pham extends CI_Model
     }
     public function sp_cung_loai($id, $idloaisanpham)
     {
-         $this->db->where(array('idloaisanpham'=>$idloaisanpham,'idsanpham !='=>$id));
-         $query=$this->db->get('sanpham');
+           
+        $this->db->select('*')->from('sanpham')->join('hinhanh','hinhanh.idhinhanh=sanpham.idhinhanh')
+        ->where(array('idloaisanpham'=>$idloaisanpham,'idsanpham !='=>$id));
+        $query= $this->db->get();
         if($query->num_rows()>0){
             return $query->result_array();
         }
