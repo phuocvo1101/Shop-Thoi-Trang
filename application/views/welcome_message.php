@@ -1,5 +1,5 @@
 
-            <div class="content-right group">
+      <div class="content-right group">
                 <div style="width: 870px;">
                     <h3>SẢN PHẨM MỚI</h3>
 
@@ -28,3 +28,6 @@
                 </div>
 
             </div>
+
+</div>
+            

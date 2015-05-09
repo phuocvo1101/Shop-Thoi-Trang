@@ -5,6 +5,8 @@ class loaisanpham extends MY_Controller
     {
         parent::__construct();
         $this->load->model('ModelSanPham/m_san_pham','msp');
+        $this->load->library('cart');
+        $this->cart->product_name_rules =  "\.\:\-_ a-z0-9\pL"; 
     }
     public function index()
     {
@@ -44,11 +46,37 @@ class loaisanpham extends MY_Controller
         $id= $this->uri->segment(3);
         $idloaisanpham= $this->uri->segment(4);
         $chitietsp= $this->msp->chi_tiet_sp_id($id);
+        $size=$this->msp->ds_size();
         if(!$chitietsp){
             redirect('Welcome');
         }
+        if($this->input->post('submitmua')){
+            
+            $data = array(
+            array(
+                'id' => $this->input->post('masanpham'),
+                'name' => $this->input->post('tensanpham'),
+                'price' =>$this->msp->toInt($this->input->post('gia')) ,
+                'qty'   => $this->input->post('soluong'),
+                'options' => array('size' =>  $this->input->post('size')) 
+            
+            ),
+            );
+        }
+       
+        // Them san pham vao gio hang
+        if($this->input->post('submitmua')){
+        if($this->cart->insert($data)){
+             $mss= "Them san pham thanh cong";
+        }else{
+            $mss= "Them san pham that bai";
+        }
+        
+        $this->data['mss']=$mss;
+        }
       
         $sanphamcungloai= $this->msp->sp_cung_loai($id,$idloaisanpham); 
+        $this->data['size']=$size;
         $this->data['spcungloai']=$sanphamcungloai;
         $this->data['chitietsp']=$chitietsp;
         $this->data['path']=array('ViewShop/index');
