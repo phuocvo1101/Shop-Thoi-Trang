@@ -1,7 +1,14 @@
  
-                    <div class="content-right group">
-                        <div style="width: 870px;">
+            <div class="row">
+                <div class="content-right group">
+                        <div style="width: 840px;">
                             <h3>CHI TIẾT SẢN PHẨM</h3>
+                            <?php if(isset($mss)){
+                                ?>
+                                <label style="color: red;"><h3><?php echo $mss; ?></h3></label>
+                            
+                                <?php
+                            } ?>
                             <div>
                                 <img src="<?php echo base_url().$chitietsp['hinh1'] ?>" width="300px" height="449px"/>
                             </div>
@@ -22,7 +29,7 @@
                             <ul class="product">
                              <?php foreach($spcungloai as $spcl){
                                 ?>
-                                 <li><img src="<?php echo base_url().$spcl['hinh1'] ?>" width="300px" height="449px"/></li>
+                                 <li><a href="<?php echo base_url() ?>loaisanpham/chitietsanpham/<?php echo $spcl['idsanpham'].'/'.$spcl['idloaisanpham'] ?>"><img src="<?php echo base_url().$spcl['hinh1'] ?>" width="300px" height="449px"/></a></li>
                                 <?php
                             } ?>
                                
@@ -32,17 +39,25 @@
                         </div>
 
                     </div>
-                    
+                    <div><a href="<?php echo base_url() ?>shop/show"><h2>XEM GIỎ HÀNG >></h2></a></div>
                     <div class="content-left group" style="padding-top: 80px; padding-right: 20px;">
                       <div style="background-color:ghostwhite;">
-                              <form>
-                                <table style="border: 1px solid black;width: 250px;height: 300px;">
+                              <form action="" method="post">
+                                <table style="border: 1px solid black;width: 230px;height: 300px;">
                                     <tr>
-                                    <td colspan="2"> ĐĂT HÀNG</td>
+                                    <td colspan="2"> ĐẶT HÀNG</td>
                                     </tr>
                                     <tr>
+                                        <td><input type="text" name="tensanpham" readonly value="<?php echo $chitietsp['tensanpham'] ?>" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mã Sản Phẩm:</td>
+                                        <td><input type="text" name="masanpham" readonly value="<?php echo $chitietsp['idsanpham'] ?>" /></td>
+                                    </tr>
+                                    
+                                    <tr>
                                         <td>Giá:</td>
-                                        <td><?php echo number_format($chitietsp['dongia']).' VND';  ?></td>
+                                        <td><input type="text" name="gia" value="<?php echo number_format($chitietsp['dongia']).' VND';  ?>" readonly /></td>
                                     </tr>
                                     <tr>
                                         <td>Số Lượng:</td>
@@ -51,10 +66,13 @@
                                     <tr>
                                         <td>Chọn Size:</td>
                                         <td>
-                                            <select>
-                                                <option>m</option>
-                                                <option>l</option>
-                                                <option>xl</option>
+                                            <select name="size">
+                                            <?php foreach($size as $sz){
+                                            ?>
+                                                <option value="<?php echo $sz['idsize'] ?>"><?php echo $sz['tensize'] ?></option>
+                                            <?php
+                                            } ?>
+                                                
                                             </select>
                                         </td>
                                     </tr>
@@ -62,10 +80,11 @@
                                 </table>
                             </form>
                     
-                    </div>
+                        </div>
                   
-                      
-
                     </div>
 
+            
+            </div>
+                    
    

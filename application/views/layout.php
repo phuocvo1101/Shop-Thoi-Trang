@@ -24,7 +24,7 @@
     <!--content-->
     <div id="primary">
             <div class="container group">
-                <div class="row">
+                
     
                 <?php
                     if(isset($path)){
@@ -33,7 +33,7 @@
                         }
                     }
                 ?>
-            </div>
+            
              <div class="border borderstrong borderpadding container"></div>
              <div class="border container"></div>
              <div class="border container"></div>

@@ -83,7 +83,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="<?php echo base_url()?>Shop">
+                            <a href="<?php echo base_url()?>">
                                 VÀO SHOP »
                             </a>
                             <?php $this->load->view('menu_top') ?>

@@ -13,6 +13,12 @@ class M_san_pham extends CI_Model
         }
         return false;
     }
+    public function ds_size()
+    {
+        $query= $this->db->get('size');
+        return $query->result_array();
+        
+    }
     public function dssplimit()
     {
         $this->db->select('*')->from('sanpham')->join('hinhanh','hinhanh.idhinhanh=sanpham.idhinhanh')
@@ -86,7 +92,7 @@ class M_san_pham extends CI_Model
     {
            
         $this->db->select('*')->from('sanpham')->join('hinhanh','hinhanh.idhinhanh=sanpham.idhinhanh')
-        ->where(array('idloaisanpham'=>$idloaisanpham,'idsanpham !='=>$id));
+        ->where(array('idloaisanpham'=>$idloaisanpham,'idsanpham !='=>$id))->order_by('rand()')->limit(2);
         $query= $this->db->get();
         if($query->num_rows()>0){
             return $query->result_array();
@@ -110,6 +116,10 @@ class M_san_pham extends CI_Model
     {
          $this->db->where(array('idsanpham'=>$data['idsanpham']));
           return $this->db->delete($data);
+    }
+    function toInt($str)
+    {
+        return (int)preg_replace("/([^0-9\\.])/i", "", $str);
     }
     
 }
