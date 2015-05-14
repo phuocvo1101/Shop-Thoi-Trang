@@ -10,16 +10,24 @@
 
                         <div class="cart-row group">
                             <div class="cart-item cart-item-icon">
-                                <span class="cart-items-number">0</span>
+                                <span class="cart-items-number"><?php if(isset($tongsp)){
+                                    echo $tongsp;
+                                }else{
+                                    echo '0';
+                                }  ?></span>
                                 <span class="cart-items-label">Sản Phẩm</span>
                             </div>
                             <div class="cart-subtotal" >
-                                <span class="cart-subtotal-integer">0</span>
+                                <span class="cart-subtotal-integer"><?php if(isset($tongtien)){
+                                    echo number_format($tongtien);
+                                }else{
+                                    echo '0';
+                                }  ?></span>
                                 <span class="cart-subtotal-decimal"></span>
                                 <span class="cart-subtotal-currency"> VND</span>
                             </div>
                             <div  class="widget woocommerce widget_shopping_cart">
-                                GIỎ HÀNG
+                                <a href="<?php echo base_url() ?>shop/show">GIỎ HÀNG</a>
                             </div>
                         </div>
 

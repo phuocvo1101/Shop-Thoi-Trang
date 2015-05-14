@@ -6,7 +6,6 @@ class Shop extends MY_Controller
         parent::__construct();
         $this->load->library('cart');
         $this->cart->product_name_rules =  "\.\:\-_ a-z0-9\pL"; 
-       // $this->cart->product_name_rules =  "\.\:\-_ a-z0-9\"\'";  
         $this->load->model('ModelSanPham/m_san_pham','msp');
     }
     public function index()
@@ -43,13 +42,18 @@ class Shop extends MY_Controller
     public function show()
     {
         if($this->input->post('capnhat')){
+            $formUpdate  = $this->input->post('soluong');
+         
             $data=$this->cart->contents();
             foreach($data as $item){
-                if($item['id'] == 9){
-                    $item['qty'] = 4;
-                    $update = array("rowid" => $item['rowid'], "qty" => $item['qty']);
+                
+                if(isset($formUpdate[$item['id']])) {
+                     $item['qty'] = $formUpdate[$item['id']];
+                    $update[] = array("rowid" => $item['rowid'], "qty" => $item['qty']);
                 }
+                
             }
+           // var_dump($update);die();
             if($this->cart->update($update)){
                 $mssupdate = "Update san pham thanh cong";
             }else{
@@ -60,8 +64,9 @@ class Shop extends MY_Controller
         //Show thong tin chi tiet gio hang
         $data=$this->cart->contents();
         $tongtien=$this->cart->total();
+        $tongsanpham = $this->cart->total_items();
        
-        
+        $this->data['tongsp']=$tongsanpham;
         $this->data['giohang']=$data;
         $this->data['tongtien']=$tongtien;
         $this->data['path']=array('ViewShop/giohang');

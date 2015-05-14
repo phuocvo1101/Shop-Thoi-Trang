@@ -1,5 +1,5 @@
 <?php
-class quantri extends CI_Controller
+class Quantri extends M_Controller
 {
     public function __construct()
     {
