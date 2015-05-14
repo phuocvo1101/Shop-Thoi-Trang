@@ -206,7 +206,7 @@ switch (ENVIRONMENT)
 	}
   
     $system_path = '../'.$system_path;
- 
+
 	// Is the system path correct?
 	if ( ! is_dir($system_path))
 	{
@@ -220,6 +220,7 @@ switch (ENVIRONMENT)
  *  Now that we know the path, set the main path constants
  * -------------------------------------------------------------------
  */
+    define('LIBARY_PATH',$system_path.'libraries');
 	// The name of THIS file
 	define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
 

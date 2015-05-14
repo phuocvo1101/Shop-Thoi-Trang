@@ -5,12 +5,25 @@ class Welcome extends MY_Controller {
     
       public function __construct()
     {
+       
         parent::__construct();
+       
         $this->load->model('ModelSanPham/m_san_pham','msp');
 
     }
     public function index()
     {
+       // $redis = new RedisClient();
+      
+      // $array = array('quang1'=>'test1','quang2'=>'test2','quang3'=>'test3');
+       // $redis->set('quang',$array);
+     // $result  =  $redis->get('quang');
+      // $redis->set('code','123456');
+        //$result  =  $redis->get('code');
+    // $result = $redis->del('code');
+       //var_dump($result);
+        //die();
+       // echo $this->cache->redis->get('kh');
         $spmoi= $this->msp->sp_moi();
         $dssplimit=$this->msp->dssplimit();
         if(!$spmoi){

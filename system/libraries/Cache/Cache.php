@@ -261,6 +261,7 @@ class CI_Cache extends CI_Driver_Library {
 	 */
 	public function is_supported($driver)
 	{
+	  
 		static $support = array();
 
 		if ( ! isset($support[$driver]))

@@ -1,10 +1,27 @@
 <form action="<?php echo base_url() ?>shop/show" method="post">
-<?php if(isset($mssupdate)){
-?>
-    <div><h4><?php echo $mssupdate; ?></h4></div>
-<?php
-} ?>
 <table align= "center" style="border: 1px gray solid; width: 700px;">
+    <tr><td colspan="5" align ="center"><h2>Hóa Đơn Khách Hàng</h2></td></tr>
+    
+    <tr>
+        <td align="right">Tên Khách Hàng:</td>
+        <td><?php echo $khachhang['tenkhachhang']; ?></td>
+    </tr>
+    <tr>
+        <td align="right">Địa Chỉ Khách Hàng:</td>
+        <td><?php echo $khachhang['diachikhachhang']; ?></td>
+    </tr>
+    <tr>
+        <td align="right">Địa Chỉ Giao Hàng:</td>
+        <td><?php echo $khachhang['diachigiaohang']; ?></td>
+    </tr>
+     <tr>
+        <td align="right">Email:</td>
+        <td><?php echo $khachhang['email']; ?></td>
+    </tr>
+    <tr>
+        <td align="right">Số Điện Thoại:</td>
+        <td><?php echo $khachhang['dienthoai']; ?></td>
+    </tr>
     <tr align="center">
         <th>Mã Sản Phẩm</th>
         <th>Tên Sản Phẩm</th>
@@ -31,9 +48,11 @@
         <td align="center"><?php echo number_format($tongtien).' VND';  ?></td>
     </tr>
     <tr>
-        <td colspan="2" align="right"><input type="submit" name="capnhat" id="capnhat" value="Cập Nhật Giỏ Hàng" /> </td>
-        <td colspan="2" align="right"><a href="<?php echo base_url() ?>user/register">Tiến Hành Thanh Toán</a> </td>
+        <td colspan="5"><label style="color: red;">Xin chân thành cảm ơn quý khách.<br /> 
+        Công Ty chúng tôi sẽ liên hệ với quý khách trong vòng 24h.</label> </td>
     </tr>
+    
    
 </table>
 </form>
+<p align="center"><a href="<?php echo base_url('user/hoantatdonhang'); ?>">HOÀN TẤT ĐƠN HÀNG</a></p>

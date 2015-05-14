@@ -5,6 +5,8 @@ class MY_Controller extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+           $this->cache->is_supported('redis');
+        $this->load->library('cart');
         $this->load->model('ModelLoaiSanPham/m_loai_sp','mlsp');
          $this->load->model('ModelThongTinCanBiet/m_thong_tin_can_biet','mtt');
         
@@ -17,6 +19,11 @@ class MY_Controller extends CI_Controller
         
         $dm_sp= $this->mlsp->get_dm_sp();
         $this->data['dmsp']=$dm_sp;
+        $tongsanpham = $this->cart->total_items();
+        $tongtien=$this->cart->total();
+        $this->data['tongsp']=$tongsanpham;
+        $this->data['tongtien']=$tongtien;
+        
 
     }
 
