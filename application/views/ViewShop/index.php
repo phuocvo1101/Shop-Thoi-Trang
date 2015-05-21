@@ -10,7 +10,7 @@
                                 <?php
                             } ?>
                             <div>
-                                <img src="<?php echo base_url().$chitietsp['hinh1'] ?>" width="300px" height="449px"/>
+                                <img src="<?php echo base_url('admin/public/images').'/'.$chitietsp['hinh'] ?>" width="300px" height="449px"/>
                             </div>
                             <div style="width: 500px; padding-left: 30px;" > 
                               <p>Mã Sản Phẩm:<?php echo $chitietsp['idsanpham'] ?></p>
@@ -27,9 +27,17 @@
                             <h3>SẢN PHẨM CÙNG LOẠI</h3>
                            
                             <ul class="product">
-                             <?php foreach($spcungloai as $spcl){
+                             <?php
+                             if($spcungloai){
+                                foreach($spcungloai as $spcl){
+                             
                                 ?>
-                                 <li><a href="<?php echo base_url() ?>loaisanpham/chitietsanpham/<?php echo $spcl['idsanpham'].'/'.$spcl['idloaisanpham'] ?>"><img src="<?php echo base_url().$spcl['hinh1'] ?>" width="300px" height="449px"/></a></li>
+                                 <li><a href="<?php echo base_url() ?>loaisanpham/chitietsanpham/<?php echo $spcl['idsanpham'].'/'.$spcl['idloaisanpham'] ?>"><img src="<?php echo base_url('admin/public/images').'/'.$spcl['hinh'] ?>" width="300px" height="449px"/></a></li>
+                                <?php
+                                }
+                            }else{
+                                ?>
+                                <li><span style="width: 300px; height: 449px;">San Pham Cong Ty Dang cap nhat</span></li>
                                 <?php
                             } ?>
                                

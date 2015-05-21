@@ -7,8 +7,14 @@ class Quantri extends M_Controller
     }
     public function index()
     {
-        //$data['path']=array('Viewhome/index');
-        $this->load->view('layoutadmin');
+        $data['path']=array('Viewnguoidung/hethongquantri');
+        $this->load->view('layoutquantri',$data);
+    }
+    public function logout()
+    {
+      $data= array('ten_nguoi_dung','tendn');
+      $this->session->unset_userdata($data);
+      redirect('');
     }
 }
 ?>

@@ -21,7 +21,7 @@ class M_san_pham extends CI_Model
     }
     public function dssplimit()
     {
-        $this->db->select('*')->from('sanpham')->join('hinhanh','hinhanh.idhinhanh=sanpham.idhinhanh')
+        $this->db->select('*')->from('sanpham')
         ->order_by('idsanpham','desc')->limit(5);
         $query=$this->db->get();
         if($query->num_rows()==0){
@@ -41,7 +41,7 @@ class M_san_pham extends CI_Model
     }
     public function sp_id($id)
     {
-        $this->db->select('*')->from('sanpham')->join('hinhanh','hinhanh.idhinhanh=sanpham.idhinhanh')
+        $this->db->select('*')->from('sanpham')
         ->where(array('idloaisanpham'=>$id));
         $query=$this->db->get();
         if($query->num_rows()>0){
@@ -51,7 +51,7 @@ class M_san_pham extends CI_Model
     }
     public function chi_tiet_sp_id($id)
     {      
-        $this->db->select('*')->from('sanpham')->join('hinhanh','hinhanh.idhinhanh=sanpham.idhinhanh')
+        $this->db->select('*')->from('sanpham')
         ->where(array('idsanpham'=>$id));
         $query= $this->db->get();
          if($query->num_rows()==0){
@@ -61,7 +61,7 @@ class M_san_pham extends CI_Model
     }
     public function sp_id_phantrang($id,$limit,$start)
     {
-        $this->db->select('*')->from('sanpham')->join('hinhanh','hinhanh.idhinhanh=sanpham.idhinhanh')
+        $this->db->select('*')->from('sanpham')
         ->where(array('idloaisanpham'=>$id))->limit($limit,$start);
         $query=$this->db->get();
         if($query->num_rows()==0){
@@ -81,7 +81,7 @@ class M_san_pham extends CI_Model
     }
     public function sp_moi()
     {
-        $this->db->select('*')->from('sanpham')->join('hinhanh','hinhanh.idhinhanh=sanpham.idhinhanh')->where(array('sanphammoi'=>'1'))->order_by('rand()')->limit(4);
+        $this->db->select('*')->from('sanpham')->where(array('sanphammoi'=>'1'))->order_by('rand()')->limit(4);
         $query=$this->db->get();
         if($query->num_rows()>0){
             return $query->result_array();
@@ -91,7 +91,7 @@ class M_san_pham extends CI_Model
     public function sp_cung_loai($id, $idloaisanpham)
     {
            
-        $this->db->select('*')->from('sanpham')->join('hinhanh','hinhanh.idhinhanh=sanpham.idhinhanh')
+        $this->db->select('*')->from('sanpham')
         ->where(array('idloaisanpham'=>$idloaisanpham,'idsanpham !='=>$id))->order_by('rand()')->limit(2);
         $query= $this->db->get();
         if($query->num_rows()>0){

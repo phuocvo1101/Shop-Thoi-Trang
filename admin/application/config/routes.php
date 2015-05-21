@@ -51,5 +51,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['login'] = 'login';
 $route['default_controller'] = 'quantri';
+$route['san-pham']='sanpham/danhsach';
+$route['san-pham/(:any)']='sanpham/danhsach';
+$route['san-pham/them']='sanpham/themsanpham';
+$route['san-pham/cap-nhat/(:num)']='sanpham/capnhat';
+$route['san-pham/xoa/(:num)']='sanpham/xoa';
+$route['san-pham/thuc-hien-xoa/(:num)']='sanpham/thuchienxoa';
+$route['nguoi-dung']='nguoidung/danhsachnguoidung';
+$route['nguoi-dung/them']='nguoidung/themnguoidung';
+$route['nguoi-dung/cap-nhat/(:num)']='nguoidung/capnhatnguoidung';
+$route['nguoi-dung/xoa/(:num)']='nguoidung/xoa';
+$route['nguoi-dung/thuc-hien-xoa/(:num)']='nguoidung/thuc_hien_xoa';
+$route['nguoi-dung/(:any)']='nguoidung/danhsachnguoidung';
+$route['dang-xuat']='quantri/logout';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
