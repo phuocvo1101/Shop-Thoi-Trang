@@ -86,6 +86,8 @@ class sanpham extends CI_Controller
                     $file_name = $data['file_name'];
                     $data=$this->input->post(null);
                     $data['hinh']=$file_name;
+                    
+                    var_dump($data);die();
                     $this->m_sp->setData($data);
                     $kq=$this->m_san_pham->them_sp($this->m_sp->getData());
                     if($kq){
@@ -107,9 +109,11 @@ class sanpham extends CI_Controller
             $sanpham= $this->input->post(null);
             $sanpham['idsanpham']= $id;
             $hinh=$this->input->post('hinh');
+            $dongia = $this->m_san_pham->to_Int($this->input->post('dongia')) ;
             if($hinh==''){
                 $hinh= $this->input->post('hinhanh');
             }
+            $sanpham['dongia']=$dongia;
             $sanpham['hinh']= $hinh;
             
             $this->m_sp->setData($sanpham);
@@ -144,6 +148,10 @@ class sanpham extends CI_Controller
          }
          $data['path']=array('Viewsanpham/thongbaoxoa');
         $this->load->view('layoutquantri',$data);
+    }
+     function toInt($str)
+    {
+        return (int)preg_replace("/([^0-9\\.])/i", "", $str);
     }
 }
  ?>

@@ -1,3 +1,13 @@
+<script>
+  $(function() {
+    $( "#datepicker" ).datepicker({
+      showOn: "button",
+      buttonImage: "<?php echo base_url('public/images') ?>/calendar.gif",
+      buttonImageOnly: true,
+      buttonText: "Select date"
+    });
+  });
+  </script>
 <h2>Thông Tin Người Dùng</h2>
   <form class="form-horizontal" role="form" method="post" action="<?php echo site_url('nguoi-dung/thuc-hien-xoa'.'/'.$nguoidung['ma_nguoi_dung']) ?>">
     <div class="form-group">
@@ -58,7 +68,8 @@
      <div class="form-group">
           <label class="control-label col-sm-2" for="ngay_sinh">Ngay Sinh:</label>
           <div class="col-sm-4">
-            <input type="date" class="form-control" name="ngay_sinh" id="ngay_sinh" value="<?php echo $nguoidung['ngay_sinh'] ?>">
+            <input type="text" id="datepicker" name="ngay_sinh" placeholder="Ngay Sinh" value="<?php echo $nguoidung['ngay_sinh'] ?>"> 
+            <!-- <input type="date" class="form-control" name="ngay_sinh" id="ngay_sinh" > -->
           </div>
           <label class="control-label col-sm-2" for="ma_loai_nguoi_dung">Loại Người Dùng:</label>
           <div class="col-sm-4">

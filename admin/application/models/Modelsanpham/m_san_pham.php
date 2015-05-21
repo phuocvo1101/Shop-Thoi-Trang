@@ -40,5 +40,11 @@
             $this->db->where(array('idsanpham'=>$id));
             return $this->db->delete('sanpham');
         }
+         
+        public function to_Int($str)
+        {
+        
+            return (int)preg_replace("/([^0-9\\.])/i", "", $str);
+        }
     }
  ?>

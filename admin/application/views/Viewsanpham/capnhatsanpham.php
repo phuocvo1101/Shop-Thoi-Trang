@@ -25,7 +25,7 @@
      <div class="form-group">
           <label class="control-label col-sm-2" for="dongia">Đơn Giá:</label>
           <div class="col-sm-4">
-            <input type="text" class="form-control" name="dongia" id="dongia" value="<?php echo $sanpham['dongia'] ?>">
+            <input type="text" class="form-control" name="dongia" id="dongia" value="<?php echo number_format($sanpham['dongia']).' VND'  ?>">
           </div>
           
            <label class="control-label col-sm-2" for="sanphammoi">Sản phẩm mới </label>
