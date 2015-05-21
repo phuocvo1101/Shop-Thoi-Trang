@@ -1,3 +1,5 @@
+<?php $this->load->helper('form'); ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="vi-vn" dir="ltr" xml:lang="vi-vn" xmlns="http://www.w3.org/1999/xhtml" style="display: block;"><head>
     <meta content="text/html; charset=utf-8" http-equiv="content-type">
@@ -28,24 +30,30 @@
 <div class="h_blue" id="border-top">
     <span class="title"><a href="index.php">Quản trị</a></span>
 </div>
+<br>
+<div align="center" style="color: red;"><?php echo validation_errors(); ?></div> 
 <div id="content-box">
     <div class="login" id="element-box">
+    
         <div class="m wbg">
             <h1>Quản trị viên đăng nhập</h1>
 
             <div id="system-message-container">
             </div>
             <div id="section-box">
+           
                 <div class="m">
-                    <form id="form-login" method="post" action="/administrator/index.php">
+                    <form id="form-login" method="post" action="">
                         <fieldset class="loginform">
-
+                                
                             <label for="mod-login-username" id="mod-login-username-lbl">Tên người dùng</label>
-                            <input type="text" size="15" class="inputbox" id="mod-login-username" name="username">
+                            <input type="text" size="15" class="inputbox" id="mod-login-username" name="username" value="<?php echo set_value('username') ?>">
+                            
 
                             <label for="mod-login-password" id="mod-login-password-lbl">Mật khẩu</label>
                             <input type="password" size="15" class="inputbox" id="mod-login-password" name="passwd">
-
+                            
+                                
                             <label for="lang" id="mod-login-language-lbl">Ngôn ngữ</label>
                             <select class="inputbox" name="lang" id="lang">
                                 <option selected="selected" value="">Mặc định</option>
@@ -56,14 +64,12 @@
                             <div class="button-holder">
                                 <div class="button1">
                                     <div class="next">
-                                        <a onclick="document.getElementById('form-login').submit();" href="#">
-                                            Đăng nhập</a>
+                                        <input type="submit" value="Đăng nhập" name="submit" />
                                     </div>
                                 </div>
                             </div>
 
                             <div class="clr"></div>
-                            <input type="submit" value="Đăng nhập" class="hidebtn">
                             <input type="hidden" value="com_login" name="option">
                             <input type="hidden" value="login" name="task">
                             <input type="hidden" value="aW5kZXgucGhw" name="return">
