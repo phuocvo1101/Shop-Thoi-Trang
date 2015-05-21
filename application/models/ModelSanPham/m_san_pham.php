@@ -117,10 +117,7 @@ class M_san_pham extends CI_Model
          $this->db->where(array('idsanpham'=>$data['idsanpham']));
           return $this->db->delete($data);
     }
-    function toInt($str)
-    {
-        return (int)preg_replace("/([^0-9\\.])/i", "", $str);
-    }
+   
     
 }
 ?>

@@ -56,12 +56,33 @@ class nguoidung extends CI_Controller
     public function themnguoidung()
     {
         if($this->input->post('them') !=''){
-            $data= $this->input->post(null);
-            $this->m_nd->setNguoiDung($data);
-            $kq=$this->m_nguoi_dung->them_nd($this->m_nd->getNguoiDung());
-            if($kq){
-                redirect('nguoi-dung');
+            $this->load->library('form_validation');
+             $config = array(
+                                array('field' => 'ten_nguoi_dung','label' => 'Họ Tên','rules' => 'required'),
+                                array('field' => 'tendn','label' => 'Tên đăng nhập','rules' => 'required|is_unique[nguoidung.tendn]'),
+                                array('field' => 'email','label' => 'Email','rules' => 'required|valid_email|is_unique[nguoidung.email]'),
+                                array('field' => 'mat_khau','label' => 'Mật khẩu','rules' => 'required'),
+                                array('field' => 'mat_khau_xac_nhan','label' => 'Xác nhận mật khẩu','rules' => 'required|matches[mat_khau]'),
+                                array('field' => 'phone','label' => 'Điện thoại','rules' => 'required|numeric'),
+                                array('field' => 'ngay_sinh','label' => 'Ngày sinh','rules' => 'required'),
+    
+            );
+            
+            $this->form_validation->set_message('required','<span style="color: red;">'.'%s không được trống'.'</span>');
+             $this->form_validation->set_message('numeric','<span style="color:red">%s phải là số</span>');  
+             $this->form_validation->set_message('valid_email','<span style="color:red">%s phải là đúng định dạng email</span>'); 
+             $this->form_validation->set_message('matches','<span style="color:red">%s phải là trùng với %s</span>');   
+              $this->form_validation->set_message('is_unique','<span style="color:red">%s đã tồn tại</span>');           
+            $this->form_validation->set_rules($config);
+             if($this->form_validation->run()){
+                $data= $this->input->post(null);
+                $this->m_nd->setNguoiDung($data);
+                $kq=$this->m_nguoi_dung->them_nd($this->m_nd->getNguoiDung());
+                if($kq){
+                    redirect('nguoi-dung');
+                }
             }
+            
         }
         $data['loainguoidung']=$this->m_nguoi_dung->loai_nguoi_dung();
         $data['title_bar']='Them nguoi dung';

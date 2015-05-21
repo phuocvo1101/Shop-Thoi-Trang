@@ -33,7 +33,7 @@
                     <td><img src="<?php echo base_url('public/images').'/'.$item['hinh'] ?>" width="50px" height="50px"/></td>
                     <td><?php echo $item['tensanpham']; ?></td>
                     <td><?php echo $item['tensanphamurl']; ?></td>
-                    <td><?php echo $item['dongia']; ?></td>
+                    <td><?php echo number_format($item['dongia']).' VND' ; ?></td>
                     
                     <td><?php echo $item['sanphammoi']; ?></td>
                     
