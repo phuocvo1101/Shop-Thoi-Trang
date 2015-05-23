@@ -8,6 +8,7 @@ class sanpham extends CI_Controller
         $this->load->model('Modelsanpham/m_san_pham');
         $this->load->model('Modelsanpham/m_sp');
         $this->load->model('Modelloaisanpham/m_loai_san_pham');
+        $this->load->model('Modelelasticsearch/m_elastic_search','mes');
         
     }
     public function index()
@@ -16,10 +17,11 @@ class sanpham extends CI_Controller
     }
     public function danhsach()
     {
+     
         $this->load->library('pagination');
 
         $config['base_url'] = site_url().'san-pham';
-        $config['total_rows'] = $this->m_san_pham->tongsosanpham();
+        //$config['total_rows'] = $this->m_san_pham->tongsosanpham();
         $config['per_page'] = 4;
         $config['uri_segment'] = 2;
         $config['use_page_numbers'] = TRUE;
@@ -42,18 +44,24 @@ class sanpham extends CI_Controller
         $config['cur_tag_close'] = '<span class="sr-only">(current)</span></a></li>';
         $config['num_tag_open'] = '<li>';
         $config['num_tag_close'] = '</li>';
-
+        $filter = '';
+       if($this->input->post('ok')){
+    
+            $filter = $this->input->post('search');
+           
+       }
         
-        
+         $page= $this->uri->segment(2)?$this->uri->segment(2):1;
+        $start= ($page-1)*$config['per_page'];
+        $dssp= $this->m_san_pham->dssp_phantrang($config['per_page'],$start,$filter);
+        $config['total_rows'] = $dssp['total'];
        
         $this->pagination->initialize($config);
-        $page= $this->uri->segment(2)?$this->uri->segment(2):1;
-        $start= ($page-1)*$config['per_page'];
-        $dssp= $this->m_san_pham->dssp_phantrang($config['per_page'],$start);
+       
         $data['link']= $this->pagination->create_links();
         
         $data['title_ds']='Danh Sách Sản Phẩm';
-        $data['dssp']=$dssp;
+        $data['dssp']=$dssp['data'];
         $data['path']=array('Viewsanpham/doc_dssp');
         $this->load->view('layoutquantri',$data);
     }
@@ -87,10 +95,13 @@ class sanpham extends CI_Controller
                     $data=$this->input->post(null);
                     $data['hinh']=$file_name;
                     
-                    var_dump($data);die();
+                    //var_dump($data);die();
                     $this->m_sp->setData($data);
                     $kq=$this->m_san_pham->them_sp($this->m_sp->getData());
                     if($kq){
+                           $insert_id = $this->db->insert_id();
+                           $sanpham=$this->m_san_pham->sp_id($insert_id);
+                           $this->mes->createDataIndex('sanpham',$insert_id,$sanpham);
                             redirect('san-pham');
                     }  
                 }
@@ -117,8 +128,10 @@ class sanpham extends CI_Controller
             $sanpham['hinh']= $hinh;
             
             $this->m_sp->setData($sanpham);
-             $kq=$this->m_san_pham->capnhat_sp($this->m_sp->getData($sanpham));
+             $kq=$this->m_san_pham->capnhat_sp('sanpham',$this->m_sp->getData($sanpham));
              if($kq){
+                $sanpham=$this->m_san_pham->sp_id($id);
+                $this->mes->createDataIndex('sanpham',$id,$sanpham);
                 redirect('san-pham');
              }
             
@@ -142,7 +155,9 @@ class sanpham extends CI_Controller
          $id= $this->uri->segment(3);
          $kq= $this->m_san_pham->xoa_sp($id);
          if($kq){
+            $this->mes->deleteDataIndex('sanpham',$id);
             $data['mss']='Xóa sản phẩm thành công';
+            
          }else{
             $data['mss']='Xóa sản phẩm không thành công';
          }

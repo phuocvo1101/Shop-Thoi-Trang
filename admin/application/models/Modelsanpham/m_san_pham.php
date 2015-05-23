@@ -7,15 +7,45 @@
         }
         public function tongsosanpham()
         {
-            return $this->db->count_all('sanpham');
+             $elasticsearch = new M_elastic_search();
+             $result = $elasticsearch->advancedquery('sanpham',array());
+            // var_dump($result);die();
+            //echo '<pre>'.print_r($result,true).'</pre>';die();
+            return $result['hits']['total'];
+            //return $this->db->count_all('sanpham');
         }
-        public function dssp_phantrang($limit, $start)
+        public function dssp_phantrang($limit, $start,$filter='')
         {
-            $result=$this->db->get('sanpham',$limit,$start);
-            if($result->num_rows()==0){
-                return false;
+          
+             $elasticsearch = new M_elastic_search();
+             $data = array('from'=>$start,'size'=>$limit);
+            if(!empty($filter)) {
+                $data['query'] = array(
+                     'multi_match' => array(
+                          "query" => $filter,
+                          "fields" => array('tensanpham')
+                     )
+                );
             }
-            return $result->result_array();
+             $result = $elasticsearch->advancedquery('sanpham',json_encode($data));
+    //echo '<pre>'.print_r($result,true).'</pre>';die();
+            //$result=$this->db->get('sanpham',$limit,$start);
+            //if($result->num_rows()==0){
+           //     return false;
+           // }
+         //  var_dump($result);die();
+           if($result['hits']['total']==0) {
+            return false;
+           }
+          
+           $arrary_result = array_map(function($e){
+              return $e['_source'];
+           },$result['hits']['hits']);
+          
+           //echo '<pre>'.print_r($arrary_result,true).'</pre>';die();
+           
+           return array('data'=>$arrary_result,'total'=>$result['hits']['total']);
+           // return $result->result_array();
         }
         public function sp_id($id)
         {

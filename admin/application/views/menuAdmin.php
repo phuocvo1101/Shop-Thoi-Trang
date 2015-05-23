@@ -17,7 +17,7 @@
                 <li><a href="<?php echo site_url('san-pham') ?>">Sản Phẩm</a></li>
                 <li><a href="<?php echo site_url('nguoi-dung') ?>">Người Dùng</a></li>
                 <li><a href="<?php echo site_url('khach-hang') ?>">Khách Hàng</a></li>
-                <li><a href="<?php echo site_url('khach-hang') ?>">Đơn Hàng</a></li>
+                <li><a href="<?php echo site_url('don-hang') ?>">Đơn Hàng</a></li>
                 <li class="dropdown">
                     <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">
                     Thông Tin Khác <span class="caret"></span></a>
