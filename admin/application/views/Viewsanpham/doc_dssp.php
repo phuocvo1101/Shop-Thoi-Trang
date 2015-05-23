@@ -1,9 +1,12 @@
-
+<?php $this->load->helper('form'); ?>
+<form action="<?php echo base_url('san-pham') ?>" method="POST">
 <div class="panel panel-default">
       <!-- Default panel contents -->
       <div class="panel-heading"><?php echo $title_ds; ?></div>
       <div class="panel-body">
         <p><?php echo anchor('san-pham/them','Thêm Sản Phẩm'); ?></p>
+        <input type="text" name="search" id="search" placeholder="search: tensanpham" value="<?php echo set_value('search') ?>"/>
+        <input type="submit" name="ok" id="ok" value="search">
       </div>
 
       <!-- Table -->
@@ -67,3 +70,4 @@
         
       </table>
     </div>
+</form>

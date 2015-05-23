@@ -6,6 +6,7 @@ class nguoidung extends CI_Controller
         parent::__construct();
         $this->load->model('Modelnguoidung/m_nguoi_dung');
         $this->load->model('Modelnguoidung/m_nd');
+        $this->load->model('Modelelasticsearch/m_elastic_search','mes');
     }
     public function index()
     {
@@ -79,6 +80,9 @@ class nguoidung extends CI_Controller
                 $this->m_nd->setNguoiDung($data);
                 $kq=$this->m_nguoi_dung->them_nd($this->m_nd->getNguoiDung());
                 if($kq){
+                    $insert_id = $this->db->insert_id();
+                    $nguoidung=$this->m_nguoi_dung->nguoi_dung_id($insert_id);
+                    $this->mes->createDataIndex('nguoidung',$insert_id,$nguoidung);
                     redirect('nguoi-dung');
                 }
             }
@@ -106,6 +110,8 @@ class nguoidung extends CI_Controller
             $this->m_nd->setNguoiDung($nguoidung);
             $kq=$this->m_nguoi_dung->capnhat_nd($this->m_nd->getNguoiDung());
             if($kq){
+                $nguoidung=$this->m_nguoi_dung->nguoi_dung_id($id);
+                $this->mes->createDataIndex('nguoidung',$id,$nguoidung);
                 redirect('nguoi-dung');
             }
         }
@@ -141,6 +147,7 @@ class nguoidung extends CI_Controller
         }
         $kq= $this->m_nguoi_dung->xoa_nd($id);
         if($kq==1){
+            $this->mes->deleteDataIndex('nguoidung',$id);
             $data['mms']= 'Xoa Thanh Cong';
         }else{
              $data['mms']= 'Xoa khong Thanh Cong';
