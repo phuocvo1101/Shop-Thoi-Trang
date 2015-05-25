@@ -5,6 +5,7 @@
         {
             parent::__construct();
         }
+
         public function tongsosanpham()
         {
              $elasticsearch = new M_elastic_search();

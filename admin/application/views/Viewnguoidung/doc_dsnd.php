@@ -1,9 +1,11 @@
-
+<form>
 <div class="panel panel-default">
       <!-- Default panel contents -->
       <div class="panel-heading"><?php echo $title_ds; ?></div>
       <div class="panel-body">
         <p><?php echo anchor('nguoi-dung/them','Thêm Người Dùng'); ?></p>
+        <input type="text" name="search" id="search" placeholder="search: tennguoidung" value=""/>
+        <input type="submit" name="ok" id="ok" value="search">
       </div>
 
       <!-- Table -->
@@ -66,3 +68,4 @@
         
       </table>
     </div>
+    </form>
