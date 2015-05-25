@@ -5,7 +5,7 @@
       <div class="panel-heading"><?php echo $title_ds; ?></div>
       <div class="panel-body">
         <p><?php echo anchor('san-pham/them','Thêm Sản Phẩm'); ?></p>
-        <input type="text" name="search" id="search" placeholder="search: tensanpham" value="<?php echo set_value('search') ?>"/>
+        <input type="text" name="search" id="search" placeholder="search: tensanpham" value="<?php echo $txtTim ?>"/>
         <input type="submit" name="ok" id="ok" value="search">
       </div>
 

@@ -1,9 +1,11 @@
 <?php
 class sanpham extends CI_Controller
 {
+    protected  $redis;
     public function __construct()
     {
         parent::__construct();
+        $this->redis = new RedisClient();
         define('HINH','http://catsashop.local/');
         $this->load->model('Modelsanpham/m_san_pham');
         $this->load->model('Modelsanpham/m_sp');
@@ -44,12 +46,20 @@ class sanpham extends CI_Controller
         $config['cur_tag_close'] = '<span class="sr-only">(current)</span></a></li>';
         $config['num_tag_open'] = '<li>';
         $config['num_tag_close'] = '</li>';
-        $filter = '';
+        
+       if(!isset($filter)){
+            $filter = '';
+
+        }
        if($this->input->post('ok')){
-    
-            $filter = $this->input->post('search');
-           
+            $this->session->unset_userdata('filter');
+            $search = $this->input->post('search');
+            $this->session->set_userdata('filter', $search);
+           //echo 'djdjj';die();
        }
+        $filter=$this->session->userdata('filter');
+       
+       
         
          $page= $this->uri->segment(2)?$this->uri->segment(2):1;
         $start= ($page-1)*$config['per_page'];
@@ -61,6 +71,7 @@ class sanpham extends CI_Controller
         $data['link']= $this->pagination->create_links();
         
         $data['title_ds']='Danh Sách Sản Phẩm';
+        $data['txtTim']=$filter;
         $data['dssp']=$dssp['data'];
         $data['path']=array('Viewsanpham/doc_dssp');
         $this->load->view('layoutquantri',$data);
@@ -101,7 +112,10 @@ class sanpham extends CI_Controller
                     if($kq){
                            $insert_id = $this->db->insert_id();
                            $sanpham=$this->m_san_pham->sp_id($insert_id);
+                           $key = 'sp.'.$insert_id;
+                           $this->redis->set($key,$sanpham);
                            $this->mes->createDataIndex('sanpham',$insert_id,$sanpham);
+
                             redirect('san-pham');
                     }  
                 }
@@ -115,7 +129,13 @@ class sanpham extends CI_Controller
     public function capnhat()
     {
         $id= $this->uri->segment(3);
-        $sanpham= $this->m_san_pham->sp_id($id);
+        $key = 'sp.'.$id;
+        $sanpham = $this->redis->get($key);
+        if($sanpham==null) {
+            $sanpham= $this->m_san_pham->sp_id($id);
+            $this->redis->set($key,$sanpham);
+        }
+
         if($this->input->post('capnhat')){
             $sanpham= $this->input->post(null);
             $sanpham['idsanpham']= $id;
@@ -128,9 +148,13 @@ class sanpham extends CI_Controller
             $sanpham['hinh']= $hinh;
             
             $this->m_sp->setData($sanpham);
-             $kq=$this->m_san_pham->capnhat_sp('sanpham',$this->m_sp->getData($sanpham));
+            $data = $this->m_sp->getData($sanpham);
+
+             $kq=$this->m_san_pham->capnhat_sp($data);
+
              if($kq){
-                $sanpham=$this->m_san_pham->sp_id($id);
+                 $sanpham= $this->m_san_pham->sp_id($id);
+                 $this->redis->set($key,$sanpham);
                 $this->mes->createDataIndex('sanpham',$id,$sanpham);
                 redirect('san-pham');
              }
@@ -156,6 +180,8 @@ class sanpham extends CI_Controller
          $kq= $this->m_san_pham->xoa_sp($id);
          if($kq){
             $this->mes->deleteDataIndex('sanpham',$id);
+             $key = 'sp.'.$id;
+             $this->redis->del($key);
             $data['mss']='Xóa sản phẩm thành công';
             
          }else{
