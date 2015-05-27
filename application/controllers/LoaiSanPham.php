@@ -1,9 +1,11 @@
 <?php
 class loaisanpham extends MY_Controller
 {
+    protected  $redis;
     public function __construct()
     {
         parent::__construct();
+        $this->redis = new RedisClient();
         $this->load->model('ModelSanPham/m_san_pham','msp');
         $this->load->library('cart');
         $this->cart->product_name_rules =  "\.\:\-_ a-z0-9\pL"; 
@@ -45,7 +47,12 @@ class loaisanpham extends MY_Controller
     {
         $id= $this->uri->segment(3);
         $idloaisanpham= $this->uri->segment(4);
-        $chitietsp= $this->msp->chi_tiet_sp_id($id);
+        $key= 'sp.'.$id;
+        $chitietsp= $this->redis->get($key);
+        if($chitietsp==null){
+            $chitietsp= $this->msp->chi_tiet_sp_id($id);
+            $this->redis->set($key,$chitietsp);
+        }
         $size=$this->msp->ds_size();
         if(!$chitietsp){
             redirect('Welcome');

@@ -1,9 +1,11 @@
-
+<form action="" method="post">
 <div class="panel panel-default">
       <!-- Default panel contents -->
       <div class="panel-heading"><?php echo $title_ds; ?></div>
       <div class="panel-body">
         <p><?php echo anchor('khach-hang/them','Thêm Khách Hàng'); ?></p>
+        <input type="text" name="search" id="search" size="60px" placeholder="search: tenkhachhang, dienthoai, email" value="<?php echo $txtTim  ?>"/>
+        <input type="submit" name="ok" id="ok" value="search">
       </div>
 
       <!-- Table -->
@@ -66,3 +68,4 @@
         
       </table>
     </div>
+    </form>

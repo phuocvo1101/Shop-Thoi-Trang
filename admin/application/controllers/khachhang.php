@@ -1,9 +1,11 @@
 <?php
     class khachhang extends CI_Controller
     {
+        protected $redis;
         public function __construct()
         {
             parent::__construct();
+            $this->redis= new RedisClient();
             $this->load->model('Modelkhachhang/m_khach_hang','mkh');
             $this->load->model('Modelkhachhang/m_kh');
              $this->load->model('Modelelasticsearch/m_elastic_search','mes');
@@ -13,7 +15,7 @@
             $this->load->library('pagination');
     
             $config['base_url'] = site_url().'khach-hang';
-            $config['total_rows'] = $this->mkh->tongsokhachhang();
+            //$config['total_rows'] = $this->mkh->tongsokhachhang();
             $config['per_page'] = 4;
             $config['uri_segment'] = 2;
             $config['use_page_numbers'] = TRUE;
@@ -37,16 +39,29 @@
             $config['num_tag_open'] = '<li>';
             $config['num_tag_close'] = '</li>';
     
+            if(!isset($filter)){
+            $filter = '';
+
+            }
+           if($this->input->post('ok')){
+                $this->session->unset_userdata('filter');
+                $search = $this->input->post('search');
+                $this->session->set_userdata('filter', $search);
+               //echo 'djdjj';die();
+           }
+            $filter=$this->session->userdata('filter');
             
-           
-            $this->pagination->initialize($config);
             $page= $this->uri->segment(2)?$this->uri->segment(2):1;
             $start= ($page-1)*$config['per_page'];
-            $dskh= $this->mkh->danhsachkhachhang($config['per_page'],$start);
+            $dskh= $this->mkh->danhsachkhachhang($config['per_page'],$start,$filter);
+            $config['total_rows']=$dskh['total'];
+            $this->pagination->initialize($config);
+            
             $data['link']= $this->pagination->create_links();
             
             $data['title_ds']='Danh Sách khách hàng';
-            $data['dskh']=$dskh;
+            $data['txtTim']=$filter;
+            $data['dskh']=$dskh['data'];
             $data['path']=array('Viewkhachhang/doc_dskh');
             $this->load->view('layoutquantri',$data);
         }
@@ -76,6 +91,8 @@
                     if($kq){
                         $insert_id = $this->db->insert_id();
                         $khachhang=$this->mkh->khach_hang_id($insert_id);
+                        $key= 'kh.'.$insert_id;
+                        $this->redis->set($key,$khachhang);
                         $this->mes->createDataIndex('khachhang',$insert_id,$khachhang);
                         redirect('khach-hang');
                     }
@@ -92,7 +109,14 @@
             if(!$id){
                 redirect('khach-hang');
             }
-            $khachhang= $this->mkh->khach_hang_id($id);
+            $key= 'kh.'.$id;
+            $khachhang= $this->redis->get($key);
+            if($khachhang==null){
+                $khachhang= $this->mkh->khach_hang_id($id);
+                $this->redis->set($key,$khachhang);
+            }
+                       
+            
             
             if(!$khachhang){
                 redirect('khach-hang');
@@ -104,6 +128,7 @@
                 $kq=$this->mkh->capnhat_kh($this->m_kh->getKhachHang());
                 if($kq){
                     $khachhang=$this->mkh->khach_hang_id($id);
+                    $this->redis->set($key,$khachhang);
                     $this->mes->createDataIndex('khachhang',$id,$khachhang);
                     redirect('khach-hang');
                 }
@@ -138,6 +163,8 @@
             }
             $kq= $this->mkh->xoa_kh($id);
             if($kq==1){
+                $key= 'kh.'.$id;
+                $this->redis->del($key);
                 $this->mes->deleteDataIndex('khachhang',$id);
                 $data['mms']= 'Xoa Thanh Cong';
             }else{
