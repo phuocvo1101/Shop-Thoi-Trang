@@ -17,13 +17,34 @@
             }
             return $result->result_array();
         }
-        public function danhsachkhachhang($limit,$start)
+        public function danhsachkhachhang($limit,$start,$filter="")
         {
-            $result=$this->db->get('khachhang',$limit,$start);
-            if($result->num_rows()==0){
+            $elasticsearch= new ElasticSearch();
+            $data= array('from'=>$start,'size'=>$limit);
+            if(!empty($filter)){
+                $data['query']=array(
+                    'multi_match'=>array(
+                     "query" => $filter,
+                     "fields" => ["tenkhachhang", "dienthoai", "email"]
+                    )
+                );
+            }
+            
+            $result= $elasticsearch->advancedquery('khachhang',json_encode($data));
+           // echo '<pre>'.print_r($result,true).'</pre>';die();
+           // $result=$this->db->get('khachhang',$limit,$start);
+            //if($result->num_rows()==0){
+             //   return false;
+            //}
+            if($result['hits']['total']==0){
                 return false;
             }
-            return $result->result_array();
+            $result_arr= array();
+            foreach($result['hits']['hits'] as $item){
+                $result_arr[]= $item['_source'];
+            }
+            return array('data'=>$result_arr,'total'=>$result['hits']['total']);
+            //return $result->result_array();
         }
         public function khach_hang_id($id)
         {

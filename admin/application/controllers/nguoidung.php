@@ -1,9 +1,12 @@
 <?php
 class nguoidung extends CI_Controller
 {
+     protected  $redis;
     public function __construct()
     {
+        
         parent::__construct();
+        $this->redis = new RedisClient();
         $this->load->model('Modelnguoidung/m_nguoi_dung');
         $this->load->model('Modelnguoidung/m_nd');
         $this->load->model('Modelelasticsearch/m_elastic_search','mes');
@@ -17,7 +20,7 @@ class nguoidung extends CI_Controller
         $this->load->library('pagination');
 
         $config['base_url'] = site_url().'nguoi-dung';
-        $config['total_rows'] = $this->m_nguoi_dung->tongsonguoidung();
+       // $config['total_rows'] = $this->m_nguoi_dung->tongsonguoidung();
         $config['per_page'] = 4;
         $config['uri_segment'] = 2;
         $config['use_page_numbers'] = TRUE;
@@ -41,16 +44,27 @@ class nguoidung extends CI_Controller
         $config['num_tag_open'] = '<li>';
         $config['num_tag_close'] = '</li>';
 
-        
-       
-        $this->pagination->initialize($config);
         $page= $this->uri->segment(2)?$this->uri->segment(2):1;
         $start= ($page-1)*$config['per_page'];
-        $dsnd= $this->m_nguoi_dung->danhsachnguoidung($config['per_page'],$start);
-        $data['link']= $this->pagination->create_links();
+        if(!isset($filter)){
+            $fiter='';
+        }
+        if($this->input->post('ok')){
+            $this->session->unset_userdata('filter');
+            $search = $this->input->post('search');
+            $this->session->set_userdata('filter',$search);
+        }
+        $filter= $this->session->userdata('filter');
         
+        $dsnd= $this->m_nguoi_dung->danhsachnguoidung($config['per_page'],$start,$filter);
+         $config['total_rows'] =$dsnd['total'];
+       
+        $this->pagination->initialize($config);
+        
+        $data['link']= $this->pagination->create_links();
+        $data['txtTim']= $filter;
         $data['title_ds']='Danh Sách người dùng';
-        $data['dsnd']=$dsnd;
+        $data['dsnd']=$dsnd['data'];
         $data['path']=array('Viewnguoidung/doc_dsnd');
         $this->load->view('layoutquantri',$data);
     }
@@ -82,6 +96,11 @@ class nguoidung extends CI_Controller
                 if($kq){
                     $insert_id = $this->db->insert_id();
                     $nguoidung=$this->m_nguoi_dung->nguoi_dung_id($insert_id);
+                    //var_dump($nguoidung);die();
+                    $key= 'nd.'.$insert_id;
+                    $key1='ndu.'.$nguoidung['tendn'];
+                    $this->redis->set($key,$nguoidung);
+                     $this->redis->set($key1,$insert_id);
                     $this->mes->createDataIndex('nguoidung',$insert_id,$nguoidung);
                     redirect('nguoi-dung');
                 }
@@ -99,7 +118,13 @@ class nguoidung extends CI_Controller
         if(!$id){
             redirect('nguoi-dung');
         }
-        $nguoidung= $this->m_nguoi_dung->nguoi_dung_id($id);
+        $key= 'nd.'.$id;
+        $nguoidung= $this->redis->get($key);
+        if($nguoidung==null){
+            $nguoidung= $this->m_nguoi_dung->nguoi_dung_id($id);
+            $this->redis->set($key,$nguoidung);
+        }
+        
         
         if(!$nguoidung){
             redirect('nguoi-dung');
@@ -111,6 +136,7 @@ class nguoidung extends CI_Controller
             $kq=$this->m_nguoi_dung->capnhat_nd($this->m_nd->getNguoiDung());
             if($kq){
                 $nguoidung=$this->m_nguoi_dung->nguoi_dung_id($id);
+                $this->redis->set($key,$nguoidung);
                 $this->mes->createDataIndex('nguoidung',$id,$nguoidung);
                 redirect('nguoi-dung');
             }
@@ -124,6 +150,7 @@ class nguoidung extends CI_Controller
     public function xoa()
     {
          $id= $this->uri->segment(3);
+         
         if(!$id){
             redirect('nguoi-dung');
         }
@@ -141,12 +168,15 @@ class nguoidung extends CI_Controller
      public function thuc_hien_xoa()
     {
          $id= $this->uri->segment(3);
+        
     
         if(!$id){
             redirect('nguoi-dung');
         }
         $kq= $this->m_nguoi_dung->xoa_nd($id);
         if($kq==1){
+             $key= 'nd.'.$id;
+            $this->redis->del($key);
             $this->mes->deleteDataIndex('nguoidung',$id);
             $data['mms']= 'Xoa Thanh Cong';
         }else{

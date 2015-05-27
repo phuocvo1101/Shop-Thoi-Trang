@@ -28,8 +28,9 @@
                      )
                 );
             }
+           // var_dump($data);die();
              $result = $elasticsearch->advancedquery('sanpham',json_encode($data));
-    //echo '<pre>'.print_r($result,true).'</pre>';die();
+   // echo '<pre>'.print_r($result,true).'</pre>';die();
             //$result=$this->db->get('sanpham',$limit,$start);
             //if($result->num_rows()==0){
            //     return false;
