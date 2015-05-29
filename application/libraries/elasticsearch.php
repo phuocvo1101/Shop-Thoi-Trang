@@ -152,6 +152,11 @@ class ElasticSearch
     {
         return $this -> call($type . '/' . $id, 'DELETE');
     }
+    
+    public function deleteType($type)
+    {
+         return $this -> call($type, 'DELETE');
+    }
 
     /**
      * make a simple search query
