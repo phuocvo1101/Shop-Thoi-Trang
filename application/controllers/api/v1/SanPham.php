@@ -5,11 +5,14 @@ require APPPATH.'/libraries/REST_Controller.php';
 
 class SanPham extends REST_Controller
 {
+    protected  $redis;
     function __construct()
     {
         // Construct our parent class
         parent::__construct();
-
+        $this->redis= new RedisClient();
+        $this->load->model('ModelSanPham/m_san_pham');
+        $this->load->model('Modelelasticsearch/m_elastic_search','mes');
         // Configure limits on our controller methods. Ensure
         // you have created the 'limits' table and enabled 'limits'
         // within application/config/rest.php
@@ -21,7 +24,23 @@ class SanPham extends REST_Controller
     }
 
 
-
+    public function indexdata_get()
+    {
+        //echo'jdjdj';die();
+        $sanpham=$this->m_san_pham->dssp();
+        if(count($sanpham)>0) {
+            $this->mes->deleteType('sanpham');
+        }
+        
+        foreach($sanpham as $item){
+           // var_dump($item);die();
+           $key='sp.'.$item['idsanpham'];
+           $this->redis->set($key,$item);
+            $this->mes->createDataIndex('sanpham',$item['idsanpham'],$item);
+        }
+        
+        $this->response($sanpham,200);
+    }
     public function list_get()
     {
 

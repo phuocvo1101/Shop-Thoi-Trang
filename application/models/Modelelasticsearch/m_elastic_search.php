@@ -7,10 +7,9 @@
         {
             parent::__construct();
              $this->elasticsearch  = new ElasticSearch();
-            // var_dump($this->elasticsearch);die();
         }
         public function createDataIndex($type,$id,$params)
-        {           
+        {                     
             return $this->elasticsearch->add($type,$id,$params);
           
         }
@@ -18,6 +17,11 @@
         public function deleteDataIndex($type,$id)
         {
              return $this->elasticsearch->delete($type,$id);
+        }
+        
+        public function deleteType($type)
+        {
+            return $this->elasticsearch->deleteType($type);
         }
         
         public function query($type,$query)
